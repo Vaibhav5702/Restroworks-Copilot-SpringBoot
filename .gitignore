@@ -5,3 +5,5 @@ target/
 *.war
 .mvn/
 .env
+/k8s/copilot-configmap.yaml
+/k8s/copilot-secret.yaml

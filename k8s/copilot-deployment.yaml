@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: copilot-deployment
+  labels:
+    app: copilot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: copilot
+  template:
+    metadata:
+      labels:
+        app: copilot
+    spec:
+      containers:
+        - name: copilot
+          image: vaibhav5702/restroworks-copilot:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: copilot-config
+          env:
+            - name: COHERE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: COHERE_API_KEY
+            - name: PINECONE_DB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: PINECONE_DB_KEY
+            - name: PINECONE_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: PINECONE_DB_HOST
+            - name: PINECONE_DB_INDEX
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: PINECONE_DB_INDEX
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: GOOGLE_API_KEY
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: GEMINI_API_KEY
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: MONGODB_URI
+            - name: JWT_SIGNING_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: copilot-secrets
+                  key: JWT_SIGNING_KEY
